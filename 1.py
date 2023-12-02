@@ -1,13 +1,5 @@
 import re
 
-def extract_digits(input_string):
-    spelled_digits = re.findall(r'one|two|three|four|five|six|seven|eight|nine|\d', input_string)
-    digit_mapping = {'one': '1', 'two': '2', 'three': '3', 'four': '4', 'five': '5', 'six': '6', 'seven': '7', 'eight': '8', 'nine': '9'}
-
-    # Return either the spelled integer, or the integer itself as the get() default value
-    actual_digits = [digit_mapping.get(digit, digit) for digit in spelled_digits]
-    return actual_digits[0],actual_digits[-1]
- 
 def replaceStringsWithNumbers(line):
     line = line.replace("one", "o1e")
     line = line.replace("two", "t2o")
@@ -24,6 +16,9 @@ with open('input.txt') as f:
     ans = 0
     for line in f:
         line = replaceStringsWithNumbers(line)
-        first_digit, last_digit = extract_digits(line)
-        ans += int(first_digit + last_digit)
+        nums = []
+        for ch in line:
+            if ch.isdigit():
+                nums.append(ch)
+        ans += int(nums[0] + nums[-1])
 print(ans)
